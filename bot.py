@@ -12,7 +12,8 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 # የቦትህን ቶከን እዚህ አስገባ
 BOT_TOKEN = "8621772695:AAEq4_K8r3JdTJhKHx4b3vmnbuHeP3LFbcs" 
 
-WEB_APP_URL = "https://edilbingo-qmd2.onrender.com/" 
+# ከኋላ የነበረው '/' ተወግዷል (double slash እንዳይፈጥር)
+WEB_APP_URL = "https://edilbingo-qmd2.onrender.com" 
 
 # ዳታቤዙን ከቦቱ ጋር የሚያግባቡ ፈንክሽኖች
 @sync_to_async
