@@ -7,6 +7,11 @@ import json
 
 def index(request):
     return render(request, 'index.html')
+from django.shortcuts import render
+
+def game_view(request):
+    # ተጫዋቹ ሲገባ የሚሰራው ኮድ ወይም ሬንደር የሚደረገው ቴምፕሌት እዚህ አለ
+    return render(request, 'bingo_app/game.html')
 
 def get_game_data(request):
     telegram_id = request.GET.get('tg_id')
