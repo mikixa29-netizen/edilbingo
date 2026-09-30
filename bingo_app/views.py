@@ -6,11 +6,11 @@ from .models import UserProfile, GameRoom, ActiveSelection
 from .cartelas_data import CARTELAS
 
 def index(request):
-    return render(request, 'bingo_app/index.html')
+    return render(request, 'index.html')
 
 def game_view(request):
-    # ፋይሉ game.html ሳይሆን index.html ስለሆነ ተስተካክሏል
-    return render(request, 'bingo_app/index.html')
+    # 'bingo_app/' የሚለው ተወግዷል፣ ምክንያቱም ፋይሉ ያለው በቀጥታ በ templates ውስጥ ስላልሆነ
+    return render(request, 'index.html')
 
 def get_game_data(request):
     telegram_id = request.GET.get('tg_id')
@@ -30,7 +30,7 @@ def get_game_data(request):
         'takenCards': taken_cards,
         'myCards': my_cards,
         'gameStatus': room.status,
-        'totalFixedCards': 200 # 200 ካርዶች እንዳሉ ያሳውቃል
+        'totalFixedCards': 200
     })
 
 @csrf_exempt
