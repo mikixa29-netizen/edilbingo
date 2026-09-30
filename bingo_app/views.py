@@ -6,11 +6,11 @@ from .models import UserProfile, GameRoom, ActiveSelection
 from .cartelas_data import CARTELAS
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'bingo_app/index.html')
 
 def game_view(request):
-    # ተጫዋቹ ሲገባ የሚሰራው ኮድ ወይም ሬንደር የሚደረገው ቴምፕሌት እዚህ አለ
-    return render(request, 'bingo_app/game.html')
+    # ፋይሉ game.html ሳይሆን index.html ስለሆነ ተስተካክሏል
+    return render(request, 'bingo_app/index.html')
 
 def get_game_data(request):
     telegram_id = request.GET.get('tg_id')
