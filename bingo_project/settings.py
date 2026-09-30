@@ -47,13 +47,12 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.*',
-                'django.contrib.messages.context_processors.*',
+                'django.contrib.auth.context_processors.auth',      # <--- ይህ መኖር አለበት
+                'django.contrib.messages.context_processors.messages', # <--- ይህ መኖር አለበት
             ],
         },
     },
 ]
-
 WSGI_APPLICATION = 'bingo_project.wsgi.application'
 
 

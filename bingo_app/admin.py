@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, GameRoom, ActiveSelection
+from .models import UserProfile, GameRoom, ActiveSelection, BotSetting, BotButton
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
@@ -15,3 +15,13 @@ class GameRoomAdmin(admin.ModelAdmin):
 @admin.register(ActiveSelection)
 class ActiveSelectionAdmin(admin.ModelAdmin):
     list_display = ('room', 'user', 'cartela_id', 'is_auto', 'is_terminated')
+
+@admin.register(BotSetting)
+class BotSettingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'welcome_text')
+
+@admin.register(BotButton)
+class BotButtonAdmin(admin.ModelAdmin):
+    list_display = ('text', 'url', 'is_web_app', 'order', 'is_active')
+    list_filter = ('is_active', 'is_web_app')
+    list_editable = ('order', 'is_active')

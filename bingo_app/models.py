@@ -19,11 +19,33 @@ class GameRoom(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # <-- የተጨመረ
 
     def __str__(self):
-        return f"Room #{self.id} - Stake: {self.stake_amount}"
+        return f"Room #{self.id} Stake: {self.stake_amount}"
 
 class ActiveSelection(models.Model):
     room = models.ForeignKey(GameRoom, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     cartela_id = models.IntegerField()
-    is_auto = models.BooleanField(default=True)           # <-- የተጨመረ
-    is_terminated = models.BooleanField(default=False)   # <-- የተጨመረ
+    is_auto = models.BooleanField(default=True)            # <-- የተጨመረ
+    is_terminated = models.BooleanField(default=False)    # <-- የተጨመረ
+
+
+# ---------------------------------------------------------
+# አዳዲሶቹ የቦት ሴቲንግ እና በተኖች መቆጣጠሪያ ሞዴሎች (Dynamic Admin Bot)
+# ---------------------------------------------------------
+
+class BotSetting(models.Model):
+    welcome_text = models.TextField(default="Welcome to Edil Bingo! Choose an option below.")
+    logo = models.ImageField(upload_to='bot_logos/', blank=True, null=True, help_text="የቦቱን ሎጎ ፎቶ እዚህ ይጫኑ")
+
+    def __str__(self):
+        return "Bot General Settings"
+
+class BotButton(models.Model):
+    text = models.CharField(max_length=100, help_text="የተኑ ስም (ለምሳሌ: Play Bingo 🎮)")
+    url = models.URLField(blank=True, null=True, help_text="የዌብ አፕ ወይም የድር ጣቢያ ሊንክ")
+    is_web_app = models.BooleanField(default=False, help_text="ይህ በተን Mini App (WebApp) የሚከፍት ከሆነ ቲክ ያድርጉት")
+    order = models.IntegerField(default=0, help_text="የተኖች ቅደም ተከተል ቁጥር (ለምሳሌ: 1, 2, 3...)")
+    is_active = models.BooleanField(default=True, help_text="ቦቱ ላይ እንዲታይ ከፈለጉ ቲክ ያድርጉ")
+
+    def __str__(self):
+        return self.text
