@@ -22,12 +22,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bingo_app',  # የእኛ አፕ
+    'bingo_app',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- ስታቲክ ፋይሎችን እንዲያነብ የረዳው ሚድልዌር (እዚህ ጋር መሆን አለበት)
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- ስታቲክ ፋይሎችን የሚያስተዳድረው ሚድልዌር
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -47,26 +47,24 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',      # <--- ይህ መኖር አለበት
-                'django.contrib.messages.context_processors.messages', # <--- ይህ መኖር አለበት
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
 WSGI_APPLICATION = 'bingo_project.wsgi.application'
 
 
 # Database
-# (Render ላይ PostgreSQL እየተጠቀምን ስለሆነ በ environment variable ወይም በ dj_database_url ሊስተካከል ይችላል)
+# (Render ላይ dj_database_url የምትጠቀም ከሆነ የድሮውን የዳታቤዝ ኮድህን እዚህ ጋር ማስገባት ትችላለህ)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-# ኖቲስ፡ Render ላይ dj_database_url ከተጠቀምክ የዳታቤዝ ክፍሉን እንዳለህ መተው ትችላለህ። 
-# አሁን የሰጠሁት staticfiles እና whitenoise ቅንብሮች ላይ ማተኮር በቂ ነው።
 
 
 # Password validation
@@ -97,8 +95,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# ስታቲክ ፋይሎችን በሰርቨር ላይ እንዲ压缩 እና እንዲያነብ የሚያደርግ ስቶሬጅ
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# ስቲል እንዳይበላሽ እና ሎጊን ፔጅ በትክክል እንዲሰራ አስተማማኝው የ WhiteNoise ስቶሬጅ
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
