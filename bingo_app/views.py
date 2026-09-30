@@ -1,13 +1,12 @@
+import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import UserProfile, GameRoom, ActiveSelection
 from .cartelas_data import CARTELAS
-import json
 
 def index(request):
     return render(request, 'index.html')
-from django.shortcuts import render
 
 def game_view(request):
     # ተጫዋቹ ሲገባ የሚሰራው ኮድ ወይም ሬንደር የሚደረገው ቴምፕሌት እዚህ አለ
