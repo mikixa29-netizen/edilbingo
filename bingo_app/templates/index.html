@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <title>Edil Bingo</title>
+    <style>
+        body { background: linear-gradient(180deg, #a48ccb, #8e74b7); font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 15px; }
+        .stats-bar { display: flex; gap: 8px; width: 100%; max-width: 400px; margin-bottom: 15px; }
+        .stat-card { background: white; border-radius: 20px; flex: 1; padding: 10px; text-align: center; font-weight: bold; }
+        .grid-container { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-width: 400px; max-height: 480px; overflow-y: auto; }
+        .card-btn { background: #dcd3ee; border: none; border-radius: 5px; height: 35px; font-weight: bold; }
+        .taken { background: #f85600 !important; color: white; }
+        .my-card { background: #21a8dc !important; color: white; border: 2px solid white; }
+        .action-btn { padding: 12px 20px; background: #f85600; color: white; font-weight: bold; border-radius: 20px; border: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="stats-bar">
+        <div class="stat-card">ብር: <span id="wallet">0</span></div>
+        <div class="stat-card">ክፍል: <span id="stake">0</span></div>
+    </div>
+    <div class="grid-container" id="grid"></div>
+    <button class="action-btn" onclick="submitSelection()">ጨዋታ ጀምር</button>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const tgId = urlParams.get('tg_id'), stake = urlParams.get('stake');
+        let selectedCard = null;
+
+        async function load() {
+            const res = await fetch(`/api/game-data/?tg_id=${tgId}&stake=${stake}`);
+            const data = await res.json();
+            document.getElementById('wallet').innerText = data.balance;
+            document.getElementById('stake').innerText = data.stake;
+            
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            
+            // 200 ቋሚ ካርዶች ግሪድ
+            for (let i = 1; i <= data.totalFixedCards; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'card-btn ' + (data.myCards.includes(i) ? 'my-card' : data.takenCards.includes(i) ? 'taken' : '');
+                btn.innerText = i;
+                if (!data.takenCards.includes(i) && !data.myCards.includes(i)) {
+                    btn.onclick = () => { selectedCard = i; alert(`ካርድ ${i} ተመርጧል!`); };
+                }
+                grid.appendChild(btn);
+            }
+        }
+        
+        async function submitSelection() {
+            if(!selectedCard) return alert("ካርድ ይምረጡ!");
+            const res = await fetch('/api/select-cartela/', {
+                method: 'POST', body: JSON.stringify({telegramId: tgId, cartelaId: selectedCard, stake: stake})
+            });
+            alert((await res.json()).message);
+            load();
+        }
+        load(); setInterval(load, 3000);
+    </script>
+</body>
+</html>
